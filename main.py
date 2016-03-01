@@ -1,31 +1,25 @@
 #!/usr/bin/python
 
-'''
-    Black        0;30     Dark Gray     1;30
-    Red          0;31     Light Red     1;31
-    Green        0;32     Light Green   1;32
-    Brown/Orange 0;33     Yellow        1;33
-    Blue         0;34     Light Blue    1;34
-    Purple       0;35     Light Purple  1;35
-    Cyan         0;36     Light Cyan    1;36
-    Light Gray   0;37     White         1;37
-'''
-
 # Import required libraries
 import sys, os, requests
-
-smtp_log, dovecot_log = '/var/log/exim_mainlog', '/var/log/maillog'
-apache_log = '/usr/local/apache/logs/error_log'
-cpanel_access_log = '/usr/local/cpanel/logs/access_log'
-accounting_log = '/var/cpanel/accounting.log'
-horde_log, roundcube_log, squirrelmail_log = '/var/cpanel/horde/log/', '/var/cpanel/roundcube/log/', '/var/cpanel/squirrelmail/'
-
-
 
 class cPanel:
 
     class Util:
         
+        class Logs:
+            
+            def __init__(self):
+                self.smtp = '/var/log/exim_mainlog' 
+                self.dovecot = '/var/log/maillog'
+                self.apache = '/usr/local/apache/logs/error_log'
+                self.cpanel_access = '/usr/local/cpanel/logs/access_log'
+                self.accounting  = '/var/cpanel/accounting.log'
+                self.horde = '/var/cpanel/horde/log/'
+                self.squirrelmail = '/var/cpanel/roundcube/log/'
+                self.squirrelmail = '/var/cpanel/squirrelmail/'
+                self.myself_slow_queries = '/var/log/slowqueries'
+
         class Colour:
     
             def __init__(self):
@@ -48,6 +42,21 @@ class cPanel:
         
             def println(self, text, colour):
                 print colour + text + self.CLEAR
+
+    class Server:
+        
+        def __init__(self):
+            self.logs = cPanel.Util.Logs
+            
+        class Mail:
+            
+            def __init__(self):
+                self.queue = os.system('exim -bpc')
+                
+        class Web:
+            
+            def __init__(self):
+                pass
 
     class User:
         
